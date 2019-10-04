@@ -1,0 +1,22 @@
+.ciliac-searchbox{
+    margin : 0 auto;
+    width : 40%;
+    height : 60px;
+    border : 1px solid;
+    margin: auto
+    /* position: absolute; */
+}
+.ciliac-checkbox{
+    width : 60px;
+    height : 20px;
+    /* border : 0px solid; */
+    /* margin-top : 10px */
+
+}
+.ciliac-checkbox-active{
+    width : 60px;
+    height : 20px;
+    /* border : 0px solid; */
+    /* margin-top : 10px */
+
+}

@@ -1,0 +1,31 @@
+.chatbox-container{
+    padding:30px;
+    width : 50%;
+    margin : 0px auto
+}
+.chat-displayer{
+ min-height: 500px ;
+ border: 1px solid black;
+ display: flex;
+ border-bottom: 0px solid black;
+ flex-direction: column;
+ padding-bottom: 20px
+ /* justify-content: space-evenly */
+}
+
+
+.text-container{
+    color : white;
+    background-color: gray;
+    border-radius: 15px;
+    height: fit-content;
+    width: fit-content;
+    padding: 2px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-top: 2%;
+    float : right
+
+
+    
+}
