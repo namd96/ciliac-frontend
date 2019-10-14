@@ -1,13 +1,16 @@
 import React from 'react'
 import '../styles/home.css';
+import Login from '../components/login';
 import { requests } from '../api/searchAgent'
 import SearchBox from '../components/smartInputBox';
 import { Table, Button, Modal,FormControl } from 'react-bootstrap';
-import { observer } from 'mobx-react';
-
-
+// import { observer } from 'mobx-react';
+import ProductContext , {ProductConsumer} from '../context/productContext'
+var ProductData;
 // @observer
 class Home extends React.Component {
+    static contextType = ProductContext
+
 
     constructor(props) {
         super(props)
@@ -20,23 +23,47 @@ class Home extends React.Component {
             }
         }
     }
+    fetchProductsList(){
+         ProductData = this.context
+console.log(ProductData)
+        // this.setState({
+        //     results: ProductData
+        // })
+        requests.call("get",`products`)
+        .then((res) => {
+            console.log("setting the state with", res.data)
+            this.setState({
+                results: res.data
+            })
+        })
+        .catch(() => {
+            this.setState({
+                results: false
+            })
+        })
+    }
 
     componentDidMount() {
-
-        requests.get(`products`)
-            .then((res) => {
-                console.log("setting the state with", res)
-                this.setState({
-                    results: res.data
-                })
-
+        console.log("rendered this")
+       if(localStorage.hasOwnProperty("userData")){ 
+           this.fetchProductsList()
+        }else{
+            this.setState({
+                loggedOut : true
             })
-            .catch(() => {
-                this.setState({
-                    results: false
-                })
-            })
+        }
     }
+
+    // componentWillReceiveProps(nextProps){
+    //     console.log("rendered this",nextProps)
+    //     if(localStorage.hasOwnProperty("userData") && this.state.loggedOut){
+    //         console.log("rendered this")
+    //         this.setState({
+    //             loggedOut : false
+    //         })
+    //         this.fetchProductsList()
+    //     }
+    // }
 
     openModal() {
         this.setState({
@@ -49,7 +76,7 @@ class Home extends React.Component {
         })
     }
     handleSave() {
-        requests.post("create/product",this.state.body)
+        requests.call("post","create/product",this.state.body)
         .then((res)=>{
             console.log(res)    
             this.handleSearchInput();
@@ -74,23 +101,27 @@ class Home extends React.Component {
             }
         })
     }
-   
+    loginCalled(){
+        console.log("rendered this")
+        requests.setToken()
+        this.setState(this.state,this.fetchProductsList()); 
+    }
     handleSearchInput(query) {
-      if(!query ){
-        requests.get(`products`)
-        .then((res) => {
-            console.log("setting the state with", res)
-            this.setState({
-                results: res.data
-            })
+        if (!query) {
+            requests.call("get", `products?glutenFree=${this.state.filtered}`)
+                .then((res) => {
+                    console.log("setting the state with", res)
+                    this.setState({
+                        results: res.data
+                    })
 
-        })
-        .catch(() => {
-            this.setState({
-                results: false
-            })
-        })
-      } else requests.get(`products?query=${query}`)
+                })
+                .catch(() => {
+                    this.setState({
+                        results: false
+                    })
+                })
+        } else requests.call("get", `products?query=${query}&glutenFree=${this.state.filtered}`)
             .then((res) => {
                 console.log("setting the state with", res)
                 this.setState({
@@ -104,10 +135,23 @@ class Home extends React.Component {
                 })
             })
     }
+    handleCheckboxChange() {
+        this.setState({
+            filtered: !this.state.filtered
+        })
+    }
     render() {
-        console.log(this.state.results)
-        return (
+        ProductData = this.context
+        console.log("[results]",ProductData)
+      if(localStorage.hasOwnProperty("userData")) { 
+          return (
+            //   <ProductConsumer>
+
             <div>
+            <SearchBox wait={true}
+                                handleCheckboxChange={this.handleCheckboxChange.bind(this)}
+                                callingApiFunction={this.handleSearchInput.bind(this)}
+                                filtered={this.state.filtered} />
                 <Modal show={this.state.show} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
                         <Modal.Title>Modal heading</Modal.Title>
@@ -145,7 +189,7 @@ class Home extends React.Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-                <SearchBox wait={true} callingApiFunction={this.handleSearchInput.bind(this)} />
+             
                 <Button onClick={() => this.openModal()}>Create</Button>
                 <div>
                     <Table striped bordered hover>
@@ -159,7 +203,7 @@ class Home extends React.Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.results && this.state.results.map((el, idx) => {
+                                !!this.state.results && this.state.results.map((el, idx) => {
                                     return <tr>
                                         <td>{idx + 1}</td>
                                         <td>{el.name}</td>
@@ -177,8 +221,15 @@ class Home extends React.Component {
 
                 </div>
             </div>
+            // </ProductConsumer>
+
+        )
+    }else{
+        return(
+            <Login loginCalled={this.loginCalled.bind(this)}/>
         )
     }
+}
 
 }
 export default Home;
