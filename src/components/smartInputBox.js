@@ -1,5 +1,6 @@
 import React from 'react'
 // import { timeout } from 'q';
+import {  FormControl } from 'react-bootstrap';
 
 
 export default class smartInputBox extends React.Component {
@@ -24,11 +25,8 @@ export default class smartInputBox extends React.Component {
     render() {
         return (
             <div>
-                <input type="text" onChange={this.handleInputChange.bind(this)} className="ciliac-searchbox"></input>
-                <input type="checkbox" 
-                onChange={this.props.handleCheckboxChange}
-                value={this.props.filtered}
-                className="ciliac-checkbox"></input>Gluten Free
+                <FormControl type="text" onChange={this.handleInputChange.bind(this)} placeholder="Search products..." className="mr-sm-2" />
+                
             </div>
         )
     }

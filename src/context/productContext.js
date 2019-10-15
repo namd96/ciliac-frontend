@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-const ProductContext = React.createContext({})
-
-export const ProductProvider = ProductContext.Provider
-export const ProductConsumer = ProductContext.Consumer
-export default ProductContext
+export default React.createContext({
+    results: false,
+    // username: false,
+    setResults: () => { },
+    // setUsername: () => { },
+});
