@@ -2,7 +2,9 @@ import React,{useContext,useEffect,useState} from 'react'
 import ProductContext , {ProductConsumer} from '../context/productContext'
 import { Table, Button, Modal, FormControl } from 'react-bootstrap';
 import { requests } from '../api/searchAgent'
-
+import {  
+    validateIfInputIsEmail
+} from "../helpers/validationChecks";
 
 const CreateProductForm =props=> {
     const productState = useContext(ProductContext);
@@ -20,12 +22,15 @@ const CreateProductForm =props=> {
        setShow(false)
      }
    const  handleSave=()=> {
-         requests.call("post","create/product",body)
-         .then((res)=>{
-             console.log(res)    
-             productState.fetchProducts()
-             handleClose()        
-     })
+    if(!!body.name && !!body.company ){
+
+        requests.call("post","create/product",body)
+        .then((res)=>{
+            console.log(res)    
+            productState.fetchProducts()
+            handleClose()        
+        })
+    }else{alert("Please fill in the required fields !")}
          
      }
  

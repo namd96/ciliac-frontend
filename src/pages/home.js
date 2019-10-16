@@ -10,8 +10,9 @@ import ProductContext, { ProductConsumer } from '../context/productContext'
 import EnquireForm from '../components/enquiryForm';
 import CreateProductForm from '../components/createProductForm';
 import Icon from '@material-ui/core/Icon';
-import {Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router-dom';
 import { fcall } from 'q';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 var ProductData;
 
 // @observer
@@ -187,10 +188,10 @@ const Home = props => {
     console.log("[results]", ProductData)
     if (localStorage.hasOwnProperty("userData")) {
         content = (
-            <div >
+            <div className="table-container-center">
 
-                <h2>Track your products' gluten content</h2>
-                {!!productState.results && <BootstrapTable bordered={false} keyField='id' data={productState.results} columns={columns} />}
+                <div className="general-heading">Look for a product to know what people think about its gluten content !</div>
+                {!!productState.results && <BootstrapTable bordered={false} keyField='id' data={productState.results} columns={columns} pagination={ paginationFactory() }/>}
 
 
 

@@ -9,6 +9,16 @@
   width : 90%;
   margin : 0px auto
 }
+.table-container-center{
+  margin-top: 2%
+
+}
+.general-heading{
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 2%
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

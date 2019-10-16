@@ -1,6 +1,9 @@
 import React from 'react'
 import { Card, Form, Button } from 'react-bootstrap';
-import { requests } from '../api/searchAgent'
+import { requests } from '../api/searchAgent';
+import {  
+    validateIfInputIsEmail
+} from "../helpers/validationChecks";
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +32,10 @@ export default class Login extends React.Component {
         })
     }
     handleSubmit = (endpoint) => {
-        requests.rawCall("post",endpoint, this.state.authCreds)
+        if (!this.state.authCreds.username) { alert("Please enter username!"); return; }
+        if (!this.state.authCreds.password) { alert("Please enter password!"); return; }
+        // if (validateIfInputIsEmail(this.state.authCreds.email)) {
+            requests.rawCall("post", endpoint, this.state.authCreds)
             .then((res) => {
                 if (!res.err && endpoint == "login") {
                     localStorage.setItem("userData", res.token)
@@ -41,6 +47,7 @@ export default class Login extends React.Component {
                     alert(res.msg)
                 }
             })
+        // }
     }
 
     handelCilacToggle() {

@@ -1,14 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import SearchBox from '../components/smartInputBox'
 import { requests } from '../api/searchAgent';
 import GlobalContext from '../context/productContext';
+import { longStackSupport } from 'q';
+import { Redirect } from 'react-router-dom';
 
 
 const Toolbar = (props) => {
     const productState = useContext(GlobalContext);
 
-
+const [loggedout , setLoggedOut] = useState(false)
     const handleSearchInput = (query) => {
         productState.fetchProducts(query)
 
@@ -43,6 +45,13 @@ const Toolbar = (props) => {
         //     })
     }
 
+    const logout = () => {
+        window.localStorage.clear();
+        setLoggedOut(true)
+        // window.location.reload()
+
+
+    }
 
 
     return (
@@ -70,9 +79,10 @@ const Toolbar = (props) => {
                         callingApiFunction={handleSearchInput.bind(this)}
                     // filtered={this.state.filtered} 
                     />
-                    {/* <Button variant="outline-success">Search</Button> */}
+                    <Button variant="outline-success" onClick={logout.bind(this)}>Log Out</Button>
                 </Form>
             </Navbar.Collapse>
+            {loggedout && <Redirect push to="/" /> }
         </Navbar>
         // </ProductProvider>
     )
