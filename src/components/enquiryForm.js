@@ -28,8 +28,7 @@ const EnquiryForm =props=> {
              console.log(res)    
              productState.fetchProducts()
              handleClose()        
-     })
-         
+     })        
      }
  
  
@@ -45,7 +44,7 @@ const EnquiryForm =props=> {
         <div>
         <Modal show={show} onHide={() => handleClose()}>
         <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Have doubts about a product? We will post your query!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         Name

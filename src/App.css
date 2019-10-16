@@ -19,7 +19,13 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.react-bs-container-body tr {
+  border-top-style: hidden !important;
+}
+.material-icons-outlined.md-10 { font-size: 18px !important; }
+.react-bs-container-header tr {
+  border-bottom-style: hidden !important;
+}
 .App-link {
   color: #09d3ac;
 }
