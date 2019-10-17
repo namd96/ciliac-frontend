@@ -88,7 +88,7 @@ const CreateProductForm =props=> {
         </Modal.Footer>
     </Modal>
  
-    <Button onClick={() => openModal()}>Create</Button>
+    <Button style={{marginRight : "8px", marginTop : "4px",marginBottom : "4px"}} onClick={() => openModal()}>Create</Button>
    </div>
     )
 

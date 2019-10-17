@@ -99,7 +99,7 @@ const EnquiryForm = props => {
                 </Modal.Footer>
             </Modal>
 
-            <Button onClick={() => openModal()}>Enquire</Button>
+            <Button  style={{marginRight : "8px",marginLeft : "8px", marginTop : "4px",marginBottom : "4px"}}  onClick={() => openModal()}>Enquire</Button>
         </div>
     )
 

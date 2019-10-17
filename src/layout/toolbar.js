@@ -5,12 +5,13 @@ import { requests } from '../api/searchAgent';
 import GlobalContext from '../context/productContext';
 import { longStackSupport } from 'q';
 import { Redirect } from 'react-router-dom';
-
+import EnquireForm from '../components/enquiryForm';
+import CreateProductForm from '../components/createProductForm';
 
 const Toolbar = (props) => {
     const productState = useContext(GlobalContext);
 
-const [loggedout , setLoggedOut] = useState(false)
+    const [loggedout, setLoggedOut] = useState(false)
     const handleSearchInput = (query) => {
         productState.fetchProducts(query)
 
@@ -72,17 +73,19 @@ const [loggedout , setLoggedOut] = useState(false)
                                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                             </NavDropdown> */}
                 </Nav>
-                <Form inline>
-                    {/* <FormControl type="text" placeholder="Search" className="mr-sm-2" /> */}
-                    <SearchBox wait={true}
-                        // handleCheckboxChange={this.handleCheckboxChange.bind(this)}
-                        callingApiFunction={handleSearchInput.bind(this)}
-                    // filtered={this.state.filtered} 
-                    />
-                    <Button variant="outline-success" onClick={logout.bind(this)}>Log Out</Button>
-                </Form>
             </Navbar.Collapse>
-            {loggedout && <Redirect push to="/" /> }
+            <Form inline>
+                {/* <FormControl type="text" placeholder="Search" className="mr-sm-2" /> */}
+                <SearchBox wait={true}
+                    // handleCheckboxChange={this.handleCheckboxChange.bind(this)}
+                    callingApiFunction={handleSearchInput.bind(this)}
+                // filtered={this.state.filtered} 
+                />
+                <EnquireForm />
+                <CreateProductForm />
+                <Button  style={{marginTop : "4px",marginBottom : "4px"}} variant="outline-success color" onClick={logout.bind(this)}>Log Out</Button>
+            </Form>
+            {loggedout && <Redirect push to="/" />}
         </Navbar>
         // </ProductProvider>
     )

@@ -25,7 +25,7 @@ export default class smartInputBox extends React.Component {
     render() {
         return (
             <div>
-                <FormControl type="text" onChange={this.handleInputChange.bind(this)} placeholder="Search products..." className="mr-sm-2" />
+                <FormControl type="text" style={{ marginTop : "4px"}}  onChange={this.handleInputChange.bind(this)} placeholder="Search products..." className="mr-sm-2" />
                 
             </div>
         )

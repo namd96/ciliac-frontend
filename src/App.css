@@ -32,10 +32,16 @@
 .react-bs-container-body tr {
   border-top-style: hidden !important;
 }
-.material-icons-outlined.md-10 { font-size: 18px !important; }
+.material-icons-outlined.md-10 { font-size: 18px !important;color  : #007bff }
+.material-icons-outlined { color  : #007bff }
+.material-icons-outlined.red { color  : #721c24 }
+.material-icons-outlined.green { color  : #28a745 }
+.red { color  : #721c24 }
+.green { color  : #28a745 }
 .react-bs-container-header tr {
   border-bottom-style: hidden !important;
 }
+.outline-success.color{border-color  : #007bff !important }
 .App-link {
   color: #09d3ac;
 }

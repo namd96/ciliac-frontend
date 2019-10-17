@@ -1,9 +1,10 @@
 import Agent from 'superagent';
 var qs = require('qs')
 
-
 // const baseUrl = "http://localhost:8060"
 const baseUrl = "http://3.230.95.77:8060"
+
+
 export const requests = {
     token: localStorage.getItem("userData") || false,
     call: (method, url, body) => {
@@ -29,3 +30,7 @@ export const requests = {
         requests.token = localStorage.getItem("userData")
     }
 }
+
+// const baseUrl = "http://localhost:8060"
+
+// export default Test;

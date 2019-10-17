@@ -2,13 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import BootstrapTable from 'react-bootstrap-table-next';
 import '../styles/home.css';
 import Login from '../components/login';
-import { requests } from '../api/searchAgent'
+import { requests,testing }  from '../api/searchAgent'
 import SearchBox from '../components/smartInputBox';
 import { Table, Button, Modal, FormControl, OverlayTrigger, Popover } from 'react-bootstrap';
 // import { observer } from 'mobx-react';
 import ProductContext, { ProductConsumer } from '../context/productContext'
-import EnquireForm from '../components/enquiryForm';
-import CreateProductForm from '../components/createProductForm';
+
 import Icon from '@material-ui/core/Icon';
 import {Redirect} from 'react-router-dom';
 import { fcall } from 'q';
@@ -26,6 +25,7 @@ const Home = props => {
         if (localStorage.hasOwnProperty("userData")) {
             productState.fetchProducts()
         }
+        // testing();
 
     }, [])
 
@@ -63,14 +63,14 @@ const Home = props => {
                     placement={"top"}
                     overlay={
                         <Popover id={`popover-positioned-${"top"}`}>
-                            <Popover.Title as="h3">{`Popover ${"top"}`}</Popover.Title>
+                            <Popover.Title as="h3">Gluten Free</Popover.Title>
                             <Popover.Content>
                                 Vote this product as {` `}<strong>Gluten Free</strong>
                             </Popover.Content>
                         </Popover>
                     }
                 >
-                    <i class="material-icons-outlined" onClick={handleVoting.bind(this, row._id, "up")} >thumb_up</i>
+                    <i class="material-icons-outlined green"  onClick={handleVoting.bind(this, row._id, "up")} >thumb_up</i>
                 </OverlayTrigger>
                 {` `} {` `}
                 <OverlayTrigger
@@ -78,7 +78,7 @@ const Home = props => {
                     placement={"top"}
                     overlay={
                         <Popover id={`popover-positioned-${"top"}`}>
-                            <Popover.Title as="h3">{`Popover ${"top"}`}</Popover.Title>
+                            <Popover.Title as="h3">Contains Gluten</Popover.Title>
                             <Popover.Content>
                                 Vote this product as {` `}<strong>Contains Gluton</strong>
 
@@ -86,7 +86,7 @@ const Home = props => {
                         </Popover>
                     }
                 >
-                    <i class="material-icons-outlined" onClick={handleVoting.bind(this, row._id, "down")}>thumb_down</i>
+                    <i class="material-icons-outlined red" onClick={handleVoting.bind(this, row._id, "down")}>thumb_down</i>
                 </OverlayTrigger>
 
 
@@ -106,7 +106,7 @@ const Home = props => {
                     placement={"top"}
                     overlay={
                         <Popover id={`popover-positioned-${"top"}`}>
-                            <Popover.Title as="h3">{`Popover ${"top"}`}</Popover.Title>
+                            {/* <Popover.Title as="h3">The votes a product received as gluten free</Popover.Title> */}
                             <Popover.Content>
                                 Votes received on this product as {` `}<strong>Gluten Free</strong>
 
@@ -125,7 +125,7 @@ const Home = props => {
                     placement={"top"}
                     overlay={
                         <Popover id={`popover-positioned-${"top"}`}>
-                            <Popover.Title as="h3">{`Popover ${"top"}`}</Popover.Title>
+                            {/* <Popover.Title as="h3">The votes a product received as it contains gluten</Popover.Title> */}
                             <Popover.Content>
                                 Vote received this product as {` `}<strong>Contains Gluton</strong>
 
@@ -141,7 +141,7 @@ const Home = props => {
     const votesFormatter = (cell, row) => {
         return (
             <div>
-                {row.upvotes} {` / `} {row.downvotes}
+                <span  className="green">{row.upvotes}</span> {` / `} <span  className="red">{row.downvotes}</span>
             </div>
         )
     }
@@ -172,6 +172,12 @@ const Home = props => {
 
         },
         {
+            dataField: 'source_of_info',
+            text: 'Source of information',
+            // formatter: voteFormatter,
+
+        },
+        {
             dataField: '',
             text: 'View Details',
             formatter: detailsBTNFormatter,
@@ -190,7 +196,7 @@ const Home = props => {
         content = (
             <div className="table-container-center">
 
-                <div className="general-heading">Look for a product to know what people think about its gluten content !</div>
+                {/* <div className="general-heading">Look for a product to know what people think about its gluten content !</div> */}
                 {!!productState.results && <BootstrapTable bordered={false} keyField='id' data={productState.results} columns={columns} pagination={ paginationFactory() }/>}
 
 
@@ -199,8 +205,7 @@ const Home = props => {
 
 
                 <div style={{ display: "flex", justifyContent: "space-around" }}>
-                    <EnquireForm />
-                    <CreateProductForm />
+                  
                 </div>
 
             </div>
