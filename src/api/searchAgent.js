@@ -1,8 +1,8 @@
 import Agent from 'superagent';
 var qs = require('qs')
 
-const baseUrl = "http://localhost:8060"
-// const baseUrl = "http://3.230.95.77:8060"
+// const baseUrl = "http://localhost:8060"
+const baseUrl = "http://3.230.95.77:8060"
 
 
 export const requests = {
