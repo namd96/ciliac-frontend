@@ -20,37 +20,65 @@ const Queries = props => {
     const productState = useContext(ProductContext);
     const [wantsToSeeDetails, setWantsToSeeDetails] = useState({ redirect: false, id: false });
     const [productDetails, setProductDetails] = useState(false);
+    const [currentProduct, setCurrentProduct] = useState({
+        name: "",
+        company: "",
+        glutenFree: false,
+        show: false,
+        id: false,
+    });
 
 
     useEffect(() => {
-        requests.call("get", `queries`)
-            .then((res) => {
-                console.log(res);
-                setProductDetails(res.data)
-            })
+     productState.settingQueriesList();
     }, [])
 
 
     const handleVoting = (details, key) => {
-        requests.call("post", `create/product`, { name: details.name, description: details.description, glutonFree: (key == "up") ? 1 : 0, user_email: details.user_email })
-            .then((res) => {
-                console.log(res);
-                productState.fetchProducts();
-                requests.call("delete", `query/${details._id}`)
-                .then((res)=>{
-                setProductDetails(res.data)
+        console.log("[details]", details.name)
+        setCurrentProduct({
+            ...currentProduct,
+            name: details.name, description: details.description, glutonFree: (key == "up") ? 1 : 0, 
+            company : details.company,
+            user_email: details.user_email, id : details._id, show : true
+        })
+        console.log(currentProduct)
+            // handleCreateProduct(details._id);
+        // requests.call("post", `create/product`, { name: details.name, description: details.description, glutonFree: (key == "up") ? 1 : 0, user_email: details.user_email })
+        //     .then((res) => {
+        //         console.log(res);
+        //         productState.fetchProducts();
+        //         requests.call("delete", `query/${details._id}`)
+        //             .then((res) => {
+        //                 setProductDetails(res.data)
 
-                })
+        //             })
 
 
-            })
+        //     })
     }
 
+    const handleCreateProduct = (id) =>{
+        setCurrentProduct({
+            ...currentProduct ,
+            show : true
+        })
+        productState.fetchProducts();
 
+    }
     const loginCalled = () => {
         console.log("rendered this")
         requests.setToken()
         productState.fetchProducts();
+    }
+
+    const deleteQuery = (id) => {
+        requests.call("delete", `query/${id}`)
+            .then((res) => {
+     productState.settingQueriesList();
+    //  setProductDetails(res.data)
+
+            })
     }
     const handleSearchInput = (query) => {
         productState.fetchProducts(query)
@@ -146,6 +174,12 @@ const Queries = props => {
             </div>
         )
     }
+    const handleClose = () => {
+        setCurrentProduct({
+            ...setCurrentProduct,
+            show: false
+        })
+    }
     const votesFormatter = (cell, row) => {
         return (
             <div>
@@ -166,13 +200,11 @@ const Queries = props => {
             dataField: 'description',
             text: 'Description',
         },
-        // {
-        //     dataField: 'upvotes',
-        //     text: 'Upvotes / Downvotes',
-        //     headerFormatter: informationFormatterVotes,
-        //     formatter: votesFormatter,
-
-        // },
+        {
+            dataField: 'company',
+            text: 'Company',
+           
+        },
         {
             dataField: '',
             text: 'Resolve the query',
@@ -195,16 +227,22 @@ const Queries = props => {
             <div className="table-container-center">
 
                 {/* <div className="general-heading">Look for a product to know what people think about its gluten content !</div> */}
-                {!!productDetails && <BootstrapTable bordered={false} keyField='id' data={productDetails} columns={columns} pagination={paginationFactory()} />}
+                {!!productState.queriesList && <BootstrapTable bordered={false} keyField='id' data={productState.queriesList} columns={columns} pagination={paginationFactory()} />}
 
 
 
                 {/* {results && JSON.stringify(results)} */}
 
-
+           {JSON.stringify(currentProduct)}
                 <div style={{ display: "flex", justifyContent: "space-around" }}>
-                    <EnquireForm />
-                    <CreateProductForm />
+                    {/* <EnquireForm /> */}
+                    <CreateProductForm show={currentProduct.show} name={currentProduct.name}
+                        company={currentProduct.company}
+                        query={true}
+                        deleteQuery={deleteQuery.bind(this)}
+                        id = {currentProduct.id}
+                        glutenFree={currentProduct.glutenFree}
+                        handleClose={handleClose.bind(this)} />
                 </div>
 
             </div>

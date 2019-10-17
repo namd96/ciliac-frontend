@@ -14,7 +14,6 @@ const EnquiryForm = props => {
         company: "",
         description: "",
         user_email: "",
-
     });
 
 
@@ -31,9 +30,17 @@ const EnquiryForm = props => {
                 requests.call("post", "enquire", body)
                     .then((res) => {
                         console.log(res)
-                        productState.fetchProducts()
+                        productState.settingQueriesList()
                         handleClose();
                         alert("Thank you for reaching us, we have posted your query. You can track it in the queries list. We will contact you on your given email if it is resolved." )
+                    
+                    setBody({
+                        
+                            name :    "",
+                            company :    "",
+                            glutonFree :  false ,
+                        
+                    })
                     })
             } else { alert("Please fill in all the fields") }
         }

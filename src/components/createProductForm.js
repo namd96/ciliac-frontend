@@ -10,25 +10,42 @@ const CreateProductForm =props=> {
     const productState = useContext(ProductContext);
     const [show , setShow] = useState(false);
     const [body , setBody] = useState({
-        name : "",
-        company : "",
-        glutonFree : false,
+        name :   props.name || "",
+        company :   props.company || "",
+        glutonFree :  props.glutonFree ,
     });
 
     const  openModal=()=> {
         setShow(true)
      }
    const  handleClose =()=> {
-       setShow(false)
+       setShow(false);
+      props.query &&  props.handleClose();
      }
    const  handleSave=()=> {
-    if(!!body.name && !!body.company ){
+    if(props.query ||(!!body.name && !!body.company )){
 
         requests.call("post","create/product",body)
         .then((res)=>{
             console.log(res)    
             productState.fetchProducts()
-            handleClose()        
+            setShow(false);
+            
+            if(props.query){
+                handleClose()   
+                requests.call("delete", `query/${props.id}`)
+                .then((res) => {
+                    props.deleteQuery(props.id)
+                    // setProductDetails(res.data)
+                    
+                })
+            }
+
+            setBody({
+                name :   "",
+                company :   "",
+                glutonFree :  false ,
+            })
         })
     }else{alert("Please fill in the required fields !")}
          
@@ -50,17 +67,18 @@ const CreateProductForm =props=> {
      }
     return(
         <div>
-        <Modal show={show} onHide={() => handleClose()}>
+        <Modal show={props.show || show} onHide={() => handleClose()}>
         <Modal.Header closeButton>
             <Modal.Title>Inform us about a product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        Name
+        Name 
+        
         <FormControl
          onChange={(e) => handleMessageTyping(e)}
             aria-label="Default"
             name="name"
-            value={body.name} 
+            value={(props.name) ? props.name :  body.name} 
             aria-describedby="inputGroup-sizing-default"
         />
         Company
@@ -68,12 +86,12 @@ const CreateProductForm =props=> {
          onChange={(e) => handleMessageTyping(e)}
             aria-label="Default"
             name="company"
-            value={body.company} 
+            value={(props.query) ? props.company : body.company} 
             aria-describedby="inputGroup-sizing-default"
         />
     <input type="checkbox"
     onChange={()=>handleCheckBoxClick()}
-    value={body.glutonFree} 
+    value={(props) ? props.glutonFree : body.glutonFree} 
 
     className="ciliac-checkbox" style={{marginTop : "5px"}}></input>Gluten Free
     

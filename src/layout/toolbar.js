@@ -12,6 +12,7 @@ const Toolbar = (props) => {
     const productState = useContext(GlobalContext);
 
     const [loggedout, setLoggedOut] = useState(false)
+    const [redirection, setRedirection] = useState(false)
     const handleSearchInput = (query) => {
         productState.fetchProducts(query)
 
@@ -53,6 +54,13 @@ const Toolbar = (props) => {
 
 
     }
+    const handleRedirect = (path) => {
+
+        setRedirection(path)
+        // window.location.reload()
+
+
+    }
 
 
     return (
@@ -63,8 +71,8 @@ const Toolbar = (props) => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/queries">Queries</Nav.Link>
+                    <Nav.Link  href="#" onClick={handleRedirect.bind(this,"/")}>Home</Nav.Link>
+                    <Nav.Link  href="#" onClick={handleRedirect.bind(this,"/queries")}>Queries</Nav.Link>
                     {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -86,6 +94,7 @@ const Toolbar = (props) => {
                 <Button  style={{marginTop : "4px",marginBottom : "4px"}} variant="outline-success color" onClick={logout.bind(this)}>Log Out</Button>
             </Form>
             {loggedout && <Redirect push to="/" />}
+            {redirection && <Redirect push to={redirection} />}
         </Navbar>
         // </ProductProvider>
     )
