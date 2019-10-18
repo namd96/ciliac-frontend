@@ -177,12 +177,12 @@ const Home = props => {
             // formatter: voteFormatter,
 
         },
-        {
-            dataField: '',
-            text: 'View Details',
-            formatter: detailsBTNFormatter,
+        // {
+        //     dataField: '',
+        //     text: 'View Details',
+        //     formatter: detailsBTNFormatter,
 
-        },
+        // },
     ]
 
     let content;
