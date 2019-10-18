@@ -13,6 +13,7 @@ const CreateProductForm =props=> {
         name :   props.name || "",
         company :   props.company || "",
         glutonFree :  props.glutonFree ,
+        source_of_info :  "" ,
     });
 
     const  openModal=()=> {
@@ -23,7 +24,7 @@ const CreateProductForm =props=> {
       props.query &&  props.handleClose();
      }
    const  handleSave=()=> {
-    if(props.query ||(!!body.name && !!body.company )){
+    if(props.query ||(!!body.name && !!body.company ) && !!body.source_of_info){
 
         requests.call("post","create/product",body)
         .then((res)=>{
@@ -87,6 +88,14 @@ const CreateProductForm =props=> {
             aria-label="Default"
             name="company"
             value={(props.query) ? props.company : body.company} 
+            aria-describedby="inputGroup-sizing-default"
+        />
+        Source of Information
+        <FormControl
+         onChange={(e) => handleMessageTyping(e)}
+            aria-label="Default"
+            name="source_of_info"
+            value={body.source_of_info} 
             aria-describedby="inputGroup-sizing-default"
         />
     <input type="checkbox"

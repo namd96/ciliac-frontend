@@ -36,11 +36,16 @@
 .material-icons-outlined { color  : #007bff }
 .material-icons-outlined.red { color  : #721c24 }
 .material-icons-outlined.green { color  : #28a745 }
+.material-icons-outlined.white { color  : #ffff }
 .red { color  : #d30215;
 font-weight: 500 }
 .green { color  : #28a745;
   font-weight: 500 }
-
+.votes-on-card{
+  /* vertical-align: text-bottom; */
+  margin-right: 4px;
+  font-size: 1.2rem
+}
 
 .react-bs-container-header tr {
   border-bottom-style: hidden !important;
@@ -64,7 +69,9 @@ font-weight: 500 }
   margin-right: 9%;
   cursor: pointer;
 }
-
+.react-bootstrap-table table {
+  table-layout: auto;
+  }
 .toggle-button-oval {
 
   height: 24px;

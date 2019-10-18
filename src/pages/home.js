@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import BootstrapTable from 'react-bootstrap-table-next';
 import '../styles/home.css';
 import Login from '../components/login';
-import { requests,testing }  from '../api/searchAgent'
+import { requests, testing } from '../api/searchAgent'
 import SearchBox from '../components/smartInputBox';
-import { Table, Button, Modal, FormControl, OverlayTrigger, Popover } from 'react-bootstrap';
+import { Table, Button, Modal, FormControl, OverlayTrigger, Popover, Card } from 'react-bootstrap';
 // import { observer } from 'mobx-react';
 import ProductContext, { ProductConsumer } from '../context/productContext'
 
 import Icon from '@material-ui/core/Icon';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { fcall } from 'q';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 var ProductData;
@@ -17,7 +17,8 @@ var ProductData;
 // @observer
 const Home = props => {
     const productState = useContext(ProductContext);
-    const [wantsToSeeDetails, setWantsToSeeDetails] = useState({redirect : false,id : false});
+    const [wantsToSeeDetails, setWantsToSeeDetails] = useState({ redirect: false, id: false });
+    const [viewPortWidth, setViewPortWidth] = useState(false);
 
 
     useEffect(() => {
@@ -25,6 +26,7 @@ const Home = props => {
         if (localStorage.hasOwnProperty("userData")) {
             productState.fetchProducts()
         }
+        setViewPortWidth(document.documentElement.clientWidth)
         // testing();
 
     }, [])
@@ -51,8 +53,8 @@ const Home = props => {
         console.log("setting", id)
         setWantsToSeeDetails({
             ...wantsToSeeDetails,
-            redirect : true,
-            id : id
+            redirect: true,
+            id: id
         })
     }
     const voteFormatter = (cell, row) => {
@@ -70,7 +72,7 @@ const Home = props => {
                         </Popover>
                     }
                 >
-                    <i class="material-icons-outlined green"  onClick={handleVoting.bind(this, row._id, "up")} >thumb_up</i>
+                    <i class="material-icons-outlined green" onClick={handleVoting.bind(this, row._id, "up")} >thumb_up</i>
                 </OverlayTrigger>
                 {` `} {` `}
                 <OverlayTrigger
@@ -95,7 +97,7 @@ const Home = props => {
     }
     const detailsBTNFormatter = (cell, row) => {
         return (
-            <i onClick={handleViewDetails.bind(this,row._id)} class="material-icons-outlined">explore</i>
+            <i onClick={handleViewDetails.bind(this, row._id)} class="material-icons-outlined">explore</i>
         )
     }
     const informationFormatterVotes = (cell, row) => {
@@ -141,7 +143,7 @@ const Home = props => {
     const votesFormatter = (cell, row) => {
         return (
             <div>
-                <span  className="green">{row.upvotes}</span> {` / `} <span  className="red">{row.downvotes}</span>
+                <span className="green">{row.upvotes}</span> {` / `} <span className="red">{row.downvotes}</span>
             </div>
         )
     }
@@ -186,7 +188,7 @@ const Home = props => {
     ]
 
     let content;
-    if(wantsToSeeDetails.redirect){
+    if (wantsToSeeDetails.redirect) {
         return (
             <Redirect push to={`/product/${wantsToSeeDetails.id}`}></Redirect>
         )
@@ -197,7 +199,47 @@ const Home = props => {
             <div className="table-container-center">
 
                 {/* <div className="general-heading">Look for a product to know what people think about its gluten content !</div> */}
-                {!!productState.results && <BootstrapTable bordered={false} keyField='id' data={productState.results} columns={columns} pagination={ paginationFactory() }/>}
+                {
+                    viewPortWidth < "768" ? <div style={{ marginTop: '2rem' }}>
+                        {
+                            productState.results && productState.results.map((el, idx) =>
+                                <div  >
+
+                                    <Card bg="info" text="white" style={{ width: '18rem' }} key={idx}>
+
+                                        <Card.Header>{el.name}</Card.Header>
+                                        <Card.Body>
+                                            <Card.Title>{el.company}</Card.Title>
+                                            <Card.Text>
+                                                <div style={{display : "flex", justifyContent : "space-around"}}>
+
+                                                    <Button>
+                                                        <span className="votes-on-card">
+
+                                                            {el.upvotes}
+                                                        </span>
+                                                            <i style={{ verticalAlign: "sub" }} class="material-icons-outlined white" onClick={handleVoting.bind(this, el._id, "up")} >thumb_up</i>
+                                                    </Button>
+                                                    <Button>
+                                                        <span className="votes-on-card" >
+
+                                                            {el.downvotes}
+                                                        </span>
+                                                            <i class="material-icons-outlined red" style={{ verticalAlign: "sub" }} onClick={handleVoting.bind(this, el._id, "down")} >thumb_down</i>
+                                                    </Button>
+                                                </div>
+
+                                            </Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                    <br />
+                                </div>
+                            )
+                        }
+
+                    </div> :
+
+                        !!productState.results && <BootstrapTable bordered={false} keyField='id' data={productState.results} columns={columns} pagination={paginationFactory()} />}
 
 
 
@@ -205,7 +247,7 @@ const Home = props => {
 
 
                 <div style={{ display: "flex", justifyContent: "space-around" }}>
-                  
+
                 </div>
 
             </div>

@@ -233,7 +233,7 @@ const Queries = props => {
 
                 {/* {results && JSON.stringify(results)} */}
 
-           {JSON.stringify(currentProduct)}
+           {/* {JSON.stringify(currentProduct)} */}
                 <div style={{ display: "flex", justifyContent: "space-around" }}>
                     {/* <EnquireForm /> */}
                     <CreateProductForm show={currentProduct.show} name={currentProduct.name}
