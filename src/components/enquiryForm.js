@@ -38,7 +38,7 @@ const EnquiryForm = props => {
                         
                             name :    "",
                             company :    "",
-                            glutonFree :  false ,
+                            glutenFree :  false ,
                         
                     })
                     })

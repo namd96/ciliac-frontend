@@ -82,7 +82,7 @@ const Home = props => {
                         <Popover id={`popover-positioned-${"top"}`}>
                             <Popover.Title as="h3">Contains Gluten</Popover.Title>
                             <Popover.Content>
-                                Vote this product as {` `}<strong>Contains Gluton</strong>
+                                Vote this product as {` `}<strong>Contains gluten</strong>
 
                             </Popover.Content>
                         </Popover>
@@ -129,7 +129,7 @@ const Home = props => {
                         <Popover id={`popover-positioned-${"top"}`}>
                             {/* <Popover.Title as="h3">The votes a product received as it contains gluten</Popover.Title> */}
                             <Popover.Content>
-                                Vote received this product as {` `}<strong>Contains Gluton</strong>
+                                Vote received this product as {` `}<strong>Contains gluten</strong>
 
                             </Popover.Content>
                         </Popover>
@@ -143,7 +143,7 @@ const Home = props => {
     const votesFormatter = (cell, row) => {
         return (
             <div>
-                <span className="green">{row.upvotes}</span> {` / `} <span className="red">{row.downvotes}</span>
+                <span className="green">{row.upvotes || 0}</span> {` / `} <span className="red">{row.downvotes || 0}</span>
             </div>
         )
     }
@@ -179,12 +179,12 @@ const Home = props => {
             // formatter: voteFormatter,
 
         },
-        // {
-        //     dataField: '',
-        //     text: 'View Details',
-        //     formatter: detailsBTNFormatter,
+        {
+            dataField: '',
+            text: 'View Details',
+            formatter: detailsBTNFormatter,
 
-        // },
+        },
     ]
 
     let content;
@@ -211,21 +211,21 @@ const Home = props => {
                                         <Card.Body>
                                             <Card.Title>{el.company}</Card.Title>
                                             <Card.Text>
-                                                <div style={{display : "flex", justifyContent : "space-around"}}>
+                                                <div style={{ display: "flex", justifyContent: "space-around" }}>
 
                                                     <Button>
                                                         <span className="votes-on-card">
 
-                                                            {el.upvotes}
+                                                            {el.upvotes || 0}
                                                         </span>
-                                                            <i style={{ verticalAlign: "sub" }} class="material-icons-outlined white" onClick={handleVoting.bind(this, el._id, "up")} >thumb_up</i>
+                                                        <i style={{ verticalAlign: "sub" }} class="material-icons-outlined white" onClick={handleVoting.bind(this, el._id, "up")} >thumb_up</i>
                                                     </Button>
                                                     <Button>
                                                         <span className="votes-on-card" >
 
-                                                            {el.downvotes}
+                                                            {el.downvotes || 0}
                                                         </span>
-                                                            <i class="material-icons-outlined red" style={{ verticalAlign: "sub" }} onClick={handleVoting.bind(this, el._id, "down")} >thumb_down</i>
+                                                        <i class="material-icons-outlined red" style={{ verticalAlign: "sub" }} onClick={handleVoting.bind(this, el._id, "down")} >thumb_down</i>
                                                     </Button>
                                                 </div>
 

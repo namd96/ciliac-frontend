@@ -81,3 +81,30 @@ font-weight: 500 }
   /* float: right; */
 
 }
+.gray-text{
+  font-size: 18px;
+  color : gray
+}
+
+.black-heading{
+  font-size: 24px;
+  color:black;
+}
+
+.comments-username{
+    font-size: 24px;
+    color: black
+}
+.comments-text{
+font-size: 20px;
+color : gray
+}
+
+.comments-box{
+  border: 1px solid #f0f0f0;
+padding: 2%
+}
+.navbar{
+  /* padding: 0.5rem 6rem !important; */
+
+}

@@ -6,6 +6,7 @@ import Chat from './pages/chat'
 import Product from './pages/productDetails'
 import Queries from './pages/queries'
 import Toolbar from './layout/toolbar'
+import SearchPage from './pages/searchPage'
 import GlobalContext from './context/globatState'
 import {
   BrowserRouter as Router,
@@ -22,7 +23,8 @@ function App() {
       <div className="app-container">
 
         <Switch>
-          {/* < Route path="/chat" component={Chat} /> */}
+          < Route path="/chat" component={Chat} />
+          < Route path="/search/:query" component={SearchPage} />
           < Route path="/queries" component={Queries} />
           < Route path="/product/:id" component={Product} />
           < Route path="/" component={Home} />

@@ -38,13 +38,13 @@ const Queries = props => {
         console.log("[details]", details.name)
         setCurrentProduct({
             ...currentProduct,
-            name: details.name, description: details.description, glutonFree: (key == "up") ? 1 : 0, 
+            name: details.name, description: details.description, glutenFree: (key == "up") ? 1 : 0, 
             company : details.company,
             user_email: details.user_email, id : details._id, show : true
         })
         console.log(currentProduct)
             // handleCreateProduct(details._id);
-        // requests.call("post", `create/product`, { name: details.name, description: details.description, glutonFree: (key == "up") ? 1 : 0, user_email: details.user_email })
+        // requests.call("post", `create/product`, { name: details.name, description: details.description, glutenFree: (key == "up") ? 1 : 0, user_email: details.user_email })
         //     .then((res) => {
         //         console.log(res);
         //         productState.fetchProducts();
@@ -75,7 +75,8 @@ const Queries = props => {
     const deleteQuery = (id) => {
         requests.call("delete", `query/${id}`)
             .then((res) => {
-     productState.settingQueriesList();
+        productState.settingQueriesList();
+        console.log("mail to", currentProduct.user_email)
     //  setProductDetails(res.data)
 
             })
@@ -116,7 +117,7 @@ const Queries = props => {
                         <Popover id={`popover-positioned-${"top"}`}>
                             <Popover.Title as="h3">{`Popover ${"top"}`}</Popover.Title>
                             <Popover.Content>
-                                Vote this product as {` `}<strong>Contains Gluton</strong>
+                                Vote this product as {` `}<strong>Contains gluten</strong>
 
                             </Popover.Content>
                         </Popover>
@@ -163,7 +164,7 @@ const Queries = props => {
                         <Popover id={`popover-positioned-${"top"}`}>
                             <Popover.Title as="h3">{`Popover ${"top"}`}</Popover.Title>
                             <Popover.Content>
-                                Vote received this product as {` `}<strong>Contains Gluton</strong>
+                                Vote received this product as {` `}<strong>Contains gluten</strong>
 
                             </Popover.Content>
                         </Popover>

@@ -8,7 +8,7 @@ const GlobalState = props => {
     let [queriesList, setQueriesList] = useState(false);
 
     const fetchProducts = (query) => {
-
+        
         requests.call("get", query ? `products?query=${query}` : "products")
             .then((res) => {
                 console.log("setting the state with", res.data)
@@ -16,7 +16,6 @@ const GlobalState = props => {
             })
             .catch(() => {
                 setResults(false)
-
             })
 
 
@@ -37,7 +36,7 @@ const GlobalState = props => {
                 setQueriesList, queriesList,
                 settingQueriesList,
 
-            }}
+                }}
         >
             {props.children}
         </GlobalContext.Provider>

@@ -12,7 +12,7 @@ const CreateProductForm =props=> {
     const [body , setBody] = useState({
         name :   props.name || "",
         company :   props.company || "",
-        glutonFree :  props.glutonFree ,
+        glutenFree :  props.glutenFree ,
         source_of_info :  "" ,
     });
 
@@ -45,7 +45,7 @@ const CreateProductForm =props=> {
             setBody({
                 name :   "",
                 company :   "",
-                glutonFree :  false ,
+                glutenFree :  false ,
             })
         })
     }else{alert("Please fill in the required fields !")}
@@ -55,7 +55,7 @@ const CreateProductForm =props=> {
     const handleCheckBoxClick = ()=>{
         setBody({
             ...body,
-            glutonFree : !body.glutonFree
+            glutenFree : !body.glutenFree
         })
      }
    const  handleMessageTyping=(e)=>{
@@ -98,9 +98,10 @@ const CreateProductForm =props=> {
             value={body.source_of_info} 
             aria-describedby="inputGroup-sizing-default"
         />
+
     <input type="checkbox"
     onChange={()=>handleCheckBoxClick()}
-    value={(props) ? props.glutonFree : body.glutonFree} 
+    checked={(props.query) ? props.glutenFree  : body.glutenFree} 
 
     className="ciliac-checkbox" style={{marginTop : "5px"}}></input>Gluten Free
     

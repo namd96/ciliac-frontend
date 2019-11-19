@@ -28,11 +28,11 @@ export default class Home extends React.Component {
     }
 
     componentDidMount() {
-        this.socket = openSocket(`${window.location.origin.replace("3000","8060")}`);
-
+        this.socket = openSocket(`${window.location.origin.replace("3001","8060")}`);
+        console.log(this.state.list)
         this.socket.on('chat', (data) => {
             this.setState({
-                list : this.state.list.concat({text : data})
+                list : this.state.list.concat({text : data.message})
             })
         });
         // this.socket.emit('chat', this.state.message);
@@ -62,7 +62,7 @@ export default class Home extends React.Component {
         const url = `chat?from=${this.state.fromId}&to=${this.state.toId}`
         return (
             <div className="chatbox-container">
-                <div className="chat-displayer">
+                <div className="chat-displayer">{JSON.stringify(this.state.list)}
                     {this.state.list && this.state.list.map((el, idx) => {
                         return <div className="message-displayer"><div className="text-container">{el.text}</div></div>
                     })}
@@ -77,7 +77,7 @@ export default class Home extends React.Component {
                     <FormControl
                      onChange={(e) => this.handleMessageTyping(e.target.value)}
                         aria-label="Default"
-                        value={this.state.message} 
+                        value={this.state.message.message} 
                         aria-describedby="inputGroup-sizing-default"
                     />
                     <Button onClick={() => this.onSend()} variant="info">Send</Button>

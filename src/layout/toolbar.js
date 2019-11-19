@@ -91,7 +91,7 @@ const Toolbar = (props) => {
                 />
                 <EnquireForm />
                 <CreateProductForm />
-                <Button  style={{marginTop : "4px",marginBottom : "4px"}} variant="outline-success color" onClick={logout.bind(this)}>Log Out</Button>
+                <Button  style={{marginTop : "4px",marginBottom : "4px", display : localStorage.hasOwnProperty("userData") ? "" : "none"}} variant="outline-success color" onClick={logout.bind(this)}>Log Out</Button>
             </Form>
             {loggedout && <Redirect push to="/" />}
             {redirection && <Redirect push to={redirection} />}
