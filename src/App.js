@@ -24,7 +24,7 @@ function App() {
 
         <Switch>
           < Route path="/chat" component={Chat} />
-          < Route path="/search/:query" component={SearchPage} />
+          < Route path="/search/:query" component={Home} />
           < Route path="/queries" component={Queries} />
           < Route path="/product/:id" component={Product} />
           < Route path="/" component={Home} />

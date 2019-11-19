@@ -1,7 +1,9 @@
 import React from 'react';
 
 const SearchPage = props =>{
-    return <div></div>
+    return <div>
+        
+    </div>
 
 
 }

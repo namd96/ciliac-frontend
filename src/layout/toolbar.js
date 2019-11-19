@@ -14,7 +14,9 @@ const Toolbar = (props) => {
     const [loggedout, setLoggedOut] = useState(false)
     const [redirection, setRedirection] = useState(false)
     const handleSearchInput = (query) => {
+         setRedirection(query ? `/search/${query}` : "/")
         productState.fetchProducts(query)
+        // history.replace("/")
 
         // fetchProducts(query)
 

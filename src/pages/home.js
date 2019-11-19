@@ -19,26 +19,29 @@ const Home = props => {
     const productState = useContext(ProductContext);
     const [wantsToSeeDetails, setWantsToSeeDetails] = useState({ redirect: false, id: false });
     const [viewPortWidth, setViewPortWidth] = useState(false);
+    const [currentQuery, setCurrentQuery] = useState("");
 
 
     useEffect(() => {
-        console.log("rendered this", productState.results)
+        console.log("sett rendered this", props.match.params.query)
         if (localStorage.hasOwnProperty("userData")) {
-            productState.fetchProducts()
+            productState.fetchProducts(props.match.params.query)
         }
         setViewPortWidth(document.documentElement.clientWidth)
         // testing();
 
-    }, [])
+    }, [props.match.params.query])
 
 
     const handleVoting = (id, key) => {
         requests.call("post", `vote/${id}?type=${key}`)
             .then((res) => {
-                console.log(res);
-                productState.fetchProducts()
+                console.log("sett",props.match.params.query);
+                productState.fetchProducts(props.match.params.query)
             })
     }
+
+
 
 
     const loginCalled = () => {
@@ -197,7 +200,7 @@ const Home = props => {
     if (localStorage.hasOwnProperty("userData")) {
         content = (
             <div className="table-container-center">
-
+xsacc{props.match.params.query}
                 {/* <div className="general-heading">Look for a product to know what people think about its gluten content !</div> */}
                 {
                     viewPortWidth < "768" ? <div style={{ marginTop: '2rem' }}>
