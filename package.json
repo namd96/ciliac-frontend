@@ -14,7 +14,7 @@
     "react-bootstrap-table-next": "^3.2.1",
     "react-bootstrap-table2-paginator": "^2.1.0",
     "react-dom": "^16.10.1",
-    "react-scripts": "3.1.2",
+    "react-scripts": "5.0.1",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "superagent": "^5.1.0"
